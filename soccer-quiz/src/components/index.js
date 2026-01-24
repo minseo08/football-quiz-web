@@ -19,3 +19,4 @@ export { PlayScreen } from './screens/PlayScreen';
 export { WaitingResultsScreen } from './screens/WaitingResultsScreen';
 export { GameResultsScreen } from './screens/GameResultsScreen';
 export { SoloResultsScreen } from './screens/SoloResultsScreen';
+export { AdminQuizScreen } from './screens/AdminQuizScreen';

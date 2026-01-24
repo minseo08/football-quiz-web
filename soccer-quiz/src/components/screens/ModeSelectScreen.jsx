@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalHeader } from '../common/GlobalHeader';
 
-export function ModeSelectScreen({ currentUser, onLogout, onMyPageClick, onSelectSolo, onSelectMulti }) {
+export function ModeSelectScreen({ currentUser, onLogout, onMyPageClick, onSelectSolo, onSelectMulti, onAdminClick }) {
   return (
     <div className="mode-select-screen">
       <GlobalHeader 
@@ -39,6 +39,11 @@ export function ModeSelectScreen({ currentUser, onLogout, onMyPageClick, onSelec
           </button>
         </div>
       </div>
+      
+      <button className="admin-button" onClick={onAdminClick}>
+        <span>관리자</span>
+      </button>
     </div>
   );
 }
+

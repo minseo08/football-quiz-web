@@ -22,7 +22,8 @@ import {
   PlayScreen,
   WaitingResultsScreen,
   GameResultsScreen,
-  SoloResultsScreen
+  SoloResultsScreen,
+  AdminQuizScreen
 } from './components';
 
 export default function App() {
@@ -279,6 +280,17 @@ export default function App() {
     );
   }
 
+  if (view === VIEWS.ADMIN_QUIZ) {
+    return (
+      <AdminQuizScreen
+        currentUser={currentUser}
+        onLogout={handleLogoutClick}
+        onMyPageClick={() => setView(VIEWS.MY_PAGE_VIEW)}
+        onBack={() => setView(VIEWS.MODE_SELECT)}
+      />
+    );
+  }
+
   if (view === VIEWS.MODE_SELECT) {
     return (
       <ModeSelectScreen
@@ -294,6 +306,7 @@ export default function App() {
           initializeSocket();
           joinLobby();
         }}
+        onAdminClick={() => setView(VIEWS.ADMIN_QUIZ)}
       />
     );
   }

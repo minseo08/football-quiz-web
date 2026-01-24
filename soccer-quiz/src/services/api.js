@@ -68,5 +68,14 @@ export const quizAPI = {
       credentials: 'include'
     });
     return response.json();
+  },
+  createQuiz: async (quizData) => {
+    const response = await fetch(`${API_URL}/api/quizzes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(quizData)
+    });
+    return response.json();
   }
 };
