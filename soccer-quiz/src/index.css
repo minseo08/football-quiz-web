@@ -1,0 +1,21 @@
+/* index.css 최상단 */
+
+/* 체감용 폰트: 궁서체(Gungsuh) 혹은 바탕체(Batang) 
+   이걸 넣었는데도 안 바뀐다면 CSS 파일 자체가 연결되지 않았거나 
+   브라우저가 이전 파일을 강하게 기억(캐시)하고 있는 것입니다.
+*/
+* {
+    font-family: "MyCustomFont" !important;
+}
+
+/* 버튼과 입력창까지 싹 다 강제 적용 */
+button, input, select, textarea, span, p, h1, h2, h3 {
+    font-family: "MyCustomFont" !important;
+}
+
+@font-face {
+  font-family: 'MyCustomFont'; /* 민서 님이 사용할 폰트 이름을 자유롭게 정하세요 */
+  src: url('./assets/NanumSquareRoundB.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}

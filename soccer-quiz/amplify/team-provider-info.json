@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-soccerquiz-dev-845de-authRole",
+      "UnauthRoleArn": "arn:aws:iam::353119485375:role/amplify-soccerquiz-dev-845de-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::353119485375:role/amplify-soccerquiz-dev-845de-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-soccerquiz-dev-845de-deployment",
+      "UnauthRoleName": "amplify-soccerquiz-dev-845de-unauthRole",
+      "StackName": "amplify-soccerquiz-dev-845de",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:353119485375:stack/amplify-soccerquiz-dev-845de/86530c20-f5e9-11f0-b137-06850954da81",
+      "AmplifyAppId": "d1q7ampihcii54"
+    },
+    "categories": {
+      "auth": {
+        "soccerquiz7a5589fd": {}
+      },
+      "api": {
+        "soccerquiz": {}
+      }
+    }
+  }
+}

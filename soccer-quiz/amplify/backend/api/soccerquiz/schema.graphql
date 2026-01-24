@@ -1,0 +1,12 @@
+type Quiz @model @auth(rules: [
+  { allow: private, operations: [read] }, # 로그인한 유저는 읽기 가능
+  { allow: owner }                        # 제작한 유저는 모든 권한 가짐
+]) {
+  id: ID!
+  type: String # 다양한 퀴즈
+  question: String!
+  imageUrls: [String]
+  options: [String]
+  answer: String!
+  hint: String
+}
