@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  server:
+    build: ./soccer-quiz-server
+    ports:
+      - "4000:4000"
+    env_file: ./soccer-quiz-server/.env
+  
+  app:
+    build: ./soccer-quiz
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server

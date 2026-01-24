@@ -1,0 +1,13 @@
+# 의존성 파일 (용량이 크고 서버에서 다시 설치함)
+node_modules/
+
+# 환경 변수 (비밀번호, API 키 등 - 절대 금지!)
+.env
+.env.local
+
+# 빌드 결과물
+build/
+dist/
+
+# OS 관련 파일
+.DS_Store
