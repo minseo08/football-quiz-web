@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:4000";
+export const API_URL = "http://43.200.181.117:4000";
 
 export const QUIZ_TYPES = {
   LOGO: 'logo',
