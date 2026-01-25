@@ -51,7 +51,6 @@ export function AdminQuizScreen({ currentUser, onLogout, onMyPageClick, onBack }
       return false;
     }
     
-    // 로고나 경기장 타입은 4개의 선택지가 필요
     if (formData.type === 'logo' || formData.type === 'stadium') {
       const hasEmptyOption = formData.options.some(opt => !opt.trim());
       if (hasEmptyOption) {
@@ -74,20 +73,22 @@ export function AdminQuizScreen({ currentUser, onLogout, onMyPageClick, onBack }
     setLoading(true);
 
     try {
-      // imageUrls를 배열로 변환 (쉼표로 구분된 URL들)
       const imageUrlsArray = formData.imageUrls
         .split(',')
         .map(url => url.trim())
         .filter(url => url);
 
+      const answerArray = formData.type === 'player'
+            ? formData.answer.split(',').map(ans => ans.trim()).filter(ans => ans)
+            : [formData.answer.trim()];
+
       const quizData = {
         type: formData.type,
         question: formData.question,
         imageUrls: imageUrlsArray,
-        answer: formData.answer
+        answer: answerArray
       };
 
-      // 로고나 경기장 타입인 경우에만 options 추가
       if (formData.type === 'logo' || formData.type === 'stadium') {
         quizData.options = formData.options.filter(opt => opt.trim());
       }
@@ -96,7 +97,7 @@ export function AdminQuizScreen({ currentUser, onLogout, onMyPageClick, onBack }
 
       if (response.success) {
         setMessage({ type: 'success', text: '퀴즈가 성공적으로 추가되었습니다!' });
-        // 폼 초기화
+
         setFormData({
           type: 'logo',
           question: '',
@@ -212,7 +213,7 @@ export function AdminQuizScreen({ currentUser, onLogout, onMyPageClick, onBack }
                 name="answer"
                 className="form-input"
                 placeholder={formData.type === 'player' 
-                  ? "예) 손흥민" 
+                  ? "예) 메시, 리오넬 메시" 
                   : "선택지 중 정답을 정확히 입력"}
                 value={formData.answer}
                 onChange={handleInputChange}
@@ -220,7 +221,7 @@ export function AdminQuizScreen({ currentUser, onLogout, onMyPageClick, onBack }
               />
               <p className="form-hint">
                 {formData.type === 'player' 
-                  ? '플레이어가 입력할 정확한 정답을 적어주세요' 
+                  ? '여러 개의 정답을 인정하려면 쉼표(,)로 구분하세요' 
                   : '위 선택지 중 하나를 정확히 입력해주세요'}
               </p>
             </div>

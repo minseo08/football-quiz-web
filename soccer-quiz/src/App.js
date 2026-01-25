@@ -202,10 +202,13 @@ export default function App() {
     
     const currentQuiz = filteredQuizzes[currentStep];
     if (!currentQuiz) return;
+
+    const userInput = submittedAnswer.trim().toLowerCase();
   
-    const isCorrect = submittedAnswer.trim().toLowerCase() === 
-                      currentQuiz.answer.trim().toLowerCase();
-    
+    const isCorrect = Array.isArray(currentQuiz.answer) 
+      ? currentQuiz.answer.some(ans => ans.trim().toLowerCase() === userInput)
+      : currentQuiz.answer.trim().toLowerCase() === userInput;
+      
     if (isCorrect) setScore(prev => prev + 1);
   
     if (currentStep < filteredQuizzes.length - 1) {
