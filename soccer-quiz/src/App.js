@@ -381,7 +381,7 @@ export default function App() {
         selectedQuizType={selectedQuizType}
         selectedTimeLimit={selectedTimeLimit}
         onLogout={handleLogoutClick}
-        onMyPageClick={() => setView(null)}
+        onMyPageClick={null}
         onLeaveRoom={leaveRoom}
         onToggleReady={toggleReady}
         onSelectQuizType={selectQuizType}
