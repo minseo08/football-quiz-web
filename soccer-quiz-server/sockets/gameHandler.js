@@ -12,6 +12,11 @@ module.exports = (io) => {
         socket.disconnect();
         return;
     }
+    if (session && session.userId) {
+        socket.userId = session.userId;
+        socket.nickname = session.user?.nickname || '익명';
+        console.log(`[연결] 고정된 유저 ID: ${socket.userId}`);
+    }
 
     const user = await User.findById(session.userId);
     if (!user) { socket.disconnect(); return; }
@@ -165,7 +170,7 @@ module.exports = (io) => {
     });
 
     // 점수 제출
-    socket.on('submit_score', ({ roomId, score, totalQuestions }) => {
+    socket.on('submit_score', async ({ roomId, score, totalQuestions }) => {
         const room = rooms[roomId];
         
         if (!room) {
@@ -181,8 +186,8 @@ module.exports = (io) => {
         };
         
         console.log(`${socket.nickname}님 점수: ${score}/${totalQuestions}`);
-        console.log(`현재 제출 인원: ${Object.keys(room.scores).length}/${room.players.length}`);
-        
+        console.log(`현재 제출 인원: ${Object.keys(room.scores).length}/${room.players.length}`); 
+
         if (Object.keys(room.scores).length === room.players.length) {
         console.log('모든 참가자 퀴즈 풀이 완료! 결과 계산 중...');
         
@@ -236,23 +241,22 @@ module.exports = (io) => {
         
         for (const roomId in rooms) {
         const room = rooms[roomId];
-        const playerIdx = room.players.findIndex(p => p.id === socketId);
+        const playerIdx = room.players.findIndex(p => p.id === socketId);        
         
         if (playerIdx !== -1) {
             userName = room.players[playerIdx].name;
+            room.players = room.players.filter(p => p.id !== socketId);
             
             if (room.host === socketId) {
-            console.log(`방장 퇴장으로 방 삭제: ${room.name}`);
-            room.players.forEach(player => {
-                if (player.id !== socketId) {
-                const alreadyInLobby = lobbyUsers.find(u => u.id === player.id);
-                if (!alreadyInLobby) {
-                    lobbyUsers.push({ id: player.id, name: player.name });
-                }
-                }
-            });
-            io.to(roomId).emit('room_deleted');
-            delete rooms[roomId];
+                console.log(`방장 퇴장으로 방 삭제: ${room.name}`);
+                socket.to(roomId).emit('room_deleted');
+                room.players.forEach(player => {
+                    const alreadyInLobby = lobbyUsers.find(u => u.id === player.id);
+                    if (!alreadyInLobby) {
+                        lobbyUsers.push({ id: player.id, name: player.name });
+                    }
+                });
+                delete rooms[roomId];
             } else {
             console.log(`${userName}님이 방에서 퇴장`);
             room.players.splice(playerIdx, 1);

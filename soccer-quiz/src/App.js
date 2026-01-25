@@ -42,7 +42,8 @@ export default function App() {
     handleLoginSuccess: setCurrentUserAfterLogin,
     handleLogout,
     handleUpdateNickname,
-    handleUpdatePassword
+    handleUpdatePassword,
+    handleUpdateStats
   } = useAuth();
 
   const {
@@ -92,17 +93,18 @@ export default function App() {
     setView
   );
 
-  // 초기 로드 시 인증 확인 및 뷰 설정
   useEffect(() => {
     if (!isAuthChecking) {
       if (currentUser) {
         initializeSocket();
-        setView(VIEWS.MODE_SELECT);
+        if (view === VIEWS.MAIN || view === VIEWS.LOADING) {
+          setView(VIEWS.MODE_SELECT);
+        }
       } else {
         setView(VIEWS.MAIN);
       }
     }
-  }, [isAuthChecking, currentUser, initializeSocket]);
+  }, [isAuthChecking, currentUser, initializeSocket, view]);
 
   // Auth Handlers
   const handleLoginSuccess = (user) => {
@@ -212,6 +214,9 @@ export default function App() {
       setTimeLeft(timeLimit);
     } else {
       const finalScore = isCorrect ? score + 1 : score;
+      const totalQuestions = filteredQuizzes.length;
+
+      handleUpdateStats(finalScore, totalQuestions);
       
       if (gameMode === GAME_MODES.MULTI && currentRoom) {
         socketEmit.submitScore(currentRoom.id, finalScore, filteredQuizzes.length);
@@ -219,7 +224,7 @@ export default function App() {
       } else {
         setSoloResults({
           score: finalScore,
-          total: filteredQuizzes.length
+          total: totalQuestions
         });
         setView(VIEWS.SOLO_RESULTS);
       }
@@ -228,7 +233,7 @@ export default function App() {
     }
   }, [filteredQuizzes, currentStep, score, timeLimit, currentRoom, gameMode, 
       timerRef, setScore, setCurrentStep, setUserInput, setTimeLeft, 
-      socketEmit, resetQuiz]);
+      socketEmit, resetQuiz, handleUpdateStats]);
 
   // Timer Effect
   useEffect(() => {
@@ -341,6 +346,7 @@ export default function App() {
         onLogout={handleLogoutClick}
         onMyPageClick={() => setView(VIEWS.MY_PAGE_VIEW)}
         onConfirm={() => {
+          resetQuiz();
           setSoloResults(null);
           setView(VIEWS.SOLO_SELECT);
         }}
@@ -356,7 +362,7 @@ export default function App() {
         roomList={roomList}
         showCreateRoomModal={showCreateRoomModal}
         onLogout={handleLogoutClick}
-        onMyPageClick={() => setView(VIEWS.MY_PAGE_VIEW)}
+        onMyPageClick={null}
         onBack={backToModeSelect}
         onShowCreateRoom={() => setShowCreateRoomModal(true)}
         onCloseCreateRoom={() => setShowCreateRoomModal(false)}
@@ -375,7 +381,7 @@ export default function App() {
         selectedQuizType={selectedQuizType}
         selectedTimeLimit={selectedTimeLimit}
         onLogout={handleLogoutClick}
-        onMyPageClick={() => setView(VIEWS.MY_PAGE_VIEW)}
+        onMyPageClick={() => setView(null)}
         onLeaveRoom={leaveRoom}
         onToggleReady={toggleReady}
         onSelectQuizType={selectQuizType}

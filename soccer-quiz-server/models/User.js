@@ -22,6 +22,14 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 15
   },
+  totalSolved: {
+    type: Number,
+    default: 0
+  },
+  totalCorrect: {
+    type: Number,
+    default: 0
+  },
   createdAt: {
     type: Date,
     default: Date.now

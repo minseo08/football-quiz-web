@@ -77,7 +77,24 @@ export const useAuth = () => {
   const handleLoginSuccess = (user) => {
     setCurrentUser(user);
   };
-
+  
+  const handleUpdateStats = async (correctCount, totalCount) => {
+    try {
+      const data = await authAPI.updateStats(correctCount, totalCount);
+      if (data.success) {
+        setCurrentUser(prev => ({
+          ...prev,
+          totalSolved: data.stats.totalSolved,
+          totalCorrect: data.stats.totalCorrect
+        }));
+        return { success: true };
+      }
+      return { success: false, message: data.message };
+    } catch (err) {
+      console.error('Update Stats Error:', err);
+      return { success: false, message: '통계 업데이트 실패' };
+    }
+  };
   return {
     currentUser,
     isAuthChecking,
@@ -85,6 +102,7 @@ export const useAuth = () => {
     handleLogout,
     handleUpdateNickname,
     handleUpdatePassword,
+    handleUpdateStats,
     checkAuth
   };
 };

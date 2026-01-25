@@ -117,6 +117,8 @@ try {
     req.session.userId = user._id;
     req.session.username = user.username;
     req.session.nickname = user.nickname;
+    req.session.totalSolved = user.totalSolved;
+    req.session.totalCorrect = user.totalCorrect;
 
     console.log(`로그인 성공: ${username} (${user.nickname})`);
 
@@ -124,7 +126,9 @@ try {
     success: true, 
     user: {
         username: user.username,
-        nickname: user.nickname
+        nickname: user.nickname,
+        totalSolved: user.totalSolved,
+        totalCorrect: user.totalCorrect
     }
     });
 
@@ -226,24 +230,82 @@ router.post('/update-password', async (req, res) => {
   }
 });
 
+router.post('/update-stats', async (req, res) => {
+  try {
+    const userId = req.session.userId; 
+
+    if (!userId) {
+      return res.status(401).json({ success: false, message: '로그인이 필요합니다.' });
+    }
+    const { correctCount, totalCount } = req.body;
+
+    if (typeof correctCount !== 'number' || typeof totalCount !== 'number') {
+      return res.status(400).json({ success: false, message: '잘못된 데이터입니다.' });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { 
+        $inc: { 
+          totalSolved: totalCount,
+          totalCorrect: correctCount
+        }
+      },
+      { new: true }
+    );
+
+    if (user) {
+      if (req.session.user) {
+        req.session.user.totalSolved = user.totalSolved;
+        req.session.user.totalCorrect = user.totalCorrect;
+      }
+
+      res.json({ 
+        success: true, 
+        stats: {
+          totalSolved: user.totalSolved,
+          totalCorrect: user.totalCorrect
+        }
+      });
+    } else {
+      res.status(404).json({ success: false, message: '사용자를 찾을 수 없습니다.' });
+    }
+
+  } catch (error) {
+    console.error('통계 업데이트 오류:', error);
+    res.status(500).json({ success: false, message: '서버 오류' });
+  }
+});
+
 // 세션 확인
 router.get('/check', async (req, res) => {
-if (req.session.userId) {
-    const user = await User.findById(req.session.userId);
-    if (user) {
-    res.json({ 
-        authenticated: true, 
-        user: {
-        username: user.username,
-        nickname: user.nickname
+  try {
+    if (req.session.userId) {
+      const user = await User.findById(req.session.userId);
+      
+      if (user) {
+        if (!req.session.user) {
+          req.session.user = {};
         }
-    });
-    } else {
-    res.json({ authenticated: false });
+        req.session.user.totalSolved = user.totalSolved;
+        req.session.user.totalCorrect = user.totalCorrect;
+
+        return res.json({ 
+          authenticated: true, 
+          user: {
+            username: user.username,
+            nickname: user.nickname,
+            totalSolved: user.totalSolved,
+            totalCorrect: user.totalCorrect
+          }
+        });
+      }
     }
-} else {
     res.json({ authenticated: false });
-}
+  } catch (error) {
+    console.error('인증 확인 오류:', error);
+    res.status(500).json({ authenticated: false, message: "서버 오류" });
+  }
 });
 
 module.exports = router;

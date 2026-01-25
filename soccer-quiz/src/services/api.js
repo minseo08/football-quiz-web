@@ -57,6 +57,16 @@ export const authAPI = {
       body: JSON.stringify({ currentPassword, nextPassword })
     });
     return response.json();
+  },
+
+  updateStats: async (correctCount, totalCount) => {
+    const response = await fetch(`${API_URL}/api/auth/update-stats`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ correctCount, totalCount })
+    });
+    return response.json();
   }
 };
 
