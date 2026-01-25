@@ -6,7 +6,7 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ./soccer-quiz-server/.env:/app/.env
+      - ./soccer-quiz-server/.env:/usr/src/app/.env
     restart: always
   
   app:
