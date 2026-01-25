@@ -1,14 +1,18 @@
 version: '3.8'
 services:
   server:
-    build: ./soccer-quiz-server
+    #build: ./soccer-quiz-server
+    image: minseo08/soccer-quiz-backend:latest
     ports:
       - "4000:4000"
     env_file: ./soccer-quiz-server/.env
+    restart: always
   
   app:
-    build: ./soccer-quiz
+    #build: ./soccer-quiz
+    image: minseo08/soccer-quiz-frontend:latest
     ports:
       - "3000:3000"
     depends_on:
       - server
+    restart: always
