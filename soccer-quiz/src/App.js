@@ -203,17 +203,11 @@ export default function App() {
     const currentQuiz = filteredQuizzes[currentStep];
     if (!currentQuiz) return;
 
-    const userInput = (submittedAnswer || "").trim().toLowerCase();
+    const userInput = submittedAnswer.trim().toLowerCase();
   
-    let isCorrect = false;
-
-    if (Array.isArray(currentQuiz.answer)) {
-      isCorrect = currentQuiz.answer.some(ans => 
-        ans && typeof ans === 'string' && ans.trim().toLowerCase() === userInput
-      );
-    } else if (currentQuiz.answer && typeof currentQuiz.answer === 'string') {
-      isCorrect = currentQuiz.answer.trim().toLowerCase() === userInput;
-    }
+    const isCorrect = Array.isArray(currentQuiz.answer) 
+      ? currentQuiz.answer.some(ans => ans.trim().toLowerCase() === userInput)
+      : currentQuiz.answer.trim().toLowerCase() === userInput;
       
     if (isCorrect) setScore(prev => prev + 1);
   
