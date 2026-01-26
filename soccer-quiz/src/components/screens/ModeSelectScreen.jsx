@@ -1,7 +1,10 @@
 import React from 'react';
 import { GlobalHeader } from '../common/GlobalHeader';
+import { ADMIN_USERNAMES } from '../constants/config';
 
 export function ModeSelectScreen({ currentUser, onLogout, onMyPageClick, onSelectSolo, onSelectMulti, onAdminClick }) {
+  const isAdmin = ADMIN_USERNAMES.includes(currentUser?.username);
+  
   return (
     <div className="mode-select-screen">
       <GlobalHeader 
@@ -40,9 +43,11 @@ export function ModeSelectScreen({ currentUser, onLogout, onMyPageClick, onSelec
         </div>
       </div>
       
-      <button className="admin-button" onClick={onAdminClick}>
-        <span>관리자</span>
-      </button>
+      {isAdmin && (
+        <button className="admin-button" onClick={onAdminClick}>
+          <span>관리자</span>
+        </button>
+      )}
     </div>
   );
 }

@@ -33,3 +33,7 @@ export const GAME_MODES = {
   SOLO: 'solo',
   MULTI: 'multi'
 };
+
+export const ADMIN_USERNAMES = [
+  'superider00'
+];
