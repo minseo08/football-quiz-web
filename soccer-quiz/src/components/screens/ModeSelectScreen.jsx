@@ -1,10 +1,10 @@
 import React from 'react';
 import { GlobalHeader } from '../common/GlobalHeader';
-import { ADMIN_USERNAMES } from '../constants/config';
+import { ADMIN_USERNAMES } from '../../constants/config';
 
 export function ModeSelectScreen({ currentUser, onLogout, onMyPageClick, onSelectSolo, onSelectMulti, onAdminClick }) {
   const isAdmin = ADMIN_USERNAMES.includes(currentUser?.username);
-  
+
   return (
     <div className="mode-select-screen">
       <GlobalHeader 
