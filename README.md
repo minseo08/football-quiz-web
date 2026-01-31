@@ -1,4 +1,4 @@
-# Football Quiz: Football Master
+# Football Master
 
 축구 팬들을 위한 실시간 퀴즈 플랫폼, **Football Master**입니다.  
 사용자는 혼자서 실력을 쌓는 **솔로 모드**부터 다른 사용자들과 실시간으로 경쟁하는 **멀티플레이 모드**까지 즐길 수 있습니다.
