@@ -44,6 +44,7 @@ src/
 ├── hooks/          # 비즈니스 로직 분리 (인증, 퀴즈, 소켓)
 ├── services/       # 서버 통신 정의 (API 요청, 소켓 설정)
 └── constants/      # 공통 설정 및 환경 변수 관리
+```
 
 ### [Server] - Server-side
 ```text
@@ -52,3 +53,4 @@ server/
 ├── routes/         # API 엔드포인트 (Auth, Quiz)
 ├── sockets/        # 실시간 게임 로직 처리 (gameHandler)
 └── config/         # DB 연결 설정
+```
