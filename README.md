@@ -8,8 +8,8 @@
 </p>
 <p align="center">
   <img src="./images/webscreen2.png" width="25%" />
-  <img src="./images/webscreen3.png" width="25%" />
-  <img src="./images/webscreen4.png" width="25%" />
+  <img src="./images/webscreen4.png" width="45%" />
+  <img src="./images/webscreen3.png" width="45%" />
   <img src="./images/webscreen5.png" width="25%" />
 </p>
 ---
