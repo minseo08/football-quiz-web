@@ -85,7 +85,7 @@ export default function GamePage() {
         </div>
       </div>
 
-      <div className="w-full max-w-2xl aspect-video bg-gray-900 rounded-[2.5rem] border-4 border-gray-800 overflow-hidden mb-8 shadow-2xl relative">
+      <div className="w-full max-w-2xl aspect-video bg-white rounded-[2.5rem] border-4 border-gray-800 overflow-hidden mb-8 shadow-2xl relative p-4">
         <img 
           src={quiz.imageUrls?.[0] || '/placeholder-football.jpg'} 
           alt="Quiz" 

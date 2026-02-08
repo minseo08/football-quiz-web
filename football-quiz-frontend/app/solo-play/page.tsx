@@ -81,7 +81,7 @@ export default function SoloPlayPage() {
                 router.push('/solo-select');
               }
             }}
-            className="px-6 py-2 border border-red-500/50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all text-sm font-bold"
+            className="px-6 py-2 border border-red-500/50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all text-sm font-bold p-4"
           >
             나가기
           </button>
@@ -90,7 +90,7 @@ export default function SoloPlayPage() {
 
       </div>
 
-      <div className="w-full max-w-2xl aspect-video bg-gray-900 rounded-[2.5rem] border-4 border-gray-800 overflow-hidden mb-10 shadow-2xl">
+      <div className="w-full max-w-2xl aspect-video bg-white rounded-[2.5rem] border-4 border-gray-800 overflow-hidden mb-10 shadow-2xl">
         <img src={quiz.imageUrls[0]} alt="Quiz" className="w-full h-full object-contain" />
       </div>
 
