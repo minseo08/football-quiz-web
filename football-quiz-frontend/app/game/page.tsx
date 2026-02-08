@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGameStore } from '../../store/useGameStore';
 import { socket } from '../../lib/socket';
+import { api } from '../../lib/api';
 
 export default function GamePage() {
   const router = useRouter();
   const { 
-    filteredQuizzes, currentStep, score, timeLeft, timeLimit, setQuizState, currentRoom 
+    filteredQuizzes, currentStep, score, timeLeft, timeLimit, setQuizState, currentRoom, setCurrentUser
   } = useGameStore();
   const [userInput, setUserInput] = useState('');
 
@@ -24,7 +25,21 @@ export default function GamePage() {
     return () => clearInterval(timer);
   }, [timeLeft, setQuizState]);
 
-  const handleAnswer = (submittedAnswer: string) => {
+  const syncStats = async (isCorrect: boolean) => {
+    try {
+      const response = await api.post('/api/users/update-stats', {
+        solved: 1,
+        correct: isCorrect ? 1 : 0
+      });
+      if (response.data.success) {
+        setCurrentUser(response.data.user);
+      }
+    } catch (err) {
+      console.error("멀티플레이 통계 반영 실패:", err);
+    }
+  };
+
+  const handleAnswer = async (submittedAnswer: string) => {
     const currentQuiz = filteredQuizzes[currentStep];
     if (!currentQuiz) {
       console.error("퀴즈 데이터가 없습니다! 현재 스텝:", currentStep);
@@ -37,6 +52,8 @@ export default function GamePage() {
 
     const nextScore = isCorrect ? score + 1 : score;
     if (isCorrect) setQuizState({ score: nextScore });
+
+    await syncStats(isCorrect);
 
     console.log(`현재 스텝: ${currentStep}, 전체 문제 수: ${filteredQuizzes.length}`);
 

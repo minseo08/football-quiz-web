@@ -23,6 +23,21 @@ export default function SoloPlayPage() {
     }
   }, [timeLeft, isChecking, setQuizState]);
 
+
+  const syncStats = async (isCorrect: boolean) => {
+    try {
+      const response = await api.post('/api/users/update-stats', {
+        solved: 1,
+        correct: isCorrect ? 1 : 0
+      });
+      if (response.data.success) {
+        setCurrentUser(response.data.user);
+      }
+    } catch (err) {
+      console.error("실시간 통계 업데이트 실패:", err);
+    }
+  };
+
   const handleAnswer = async (answer: string) => {
     const currentQuiz = filteredQuizzes[currentStep];
     if (!currentQuiz) return;
@@ -39,7 +54,9 @@ export default function SoloPlayPage() {
     if(isCorrect){
       setQuizState({ score: score + 1 });
     }
+    await syncStats(isCorrect);
   }
+
   const handleNextStep = async () => {
     setIsChecking(false);
     setUserInput('');
@@ -50,17 +67,17 @@ export default function SoloPlayPage() {
         timeLeft: timeLimit 
       });
     } else {
-      try {
-        const response = await api.post('/api/users/update-stats', {
-        solved: filteredQuizzes.length,
-        correct: score
-        });
-        if (response.data.success) {
-          setCurrentUser(response.data.user); 
-        }
-      } catch (err) {
-          console.error("통계 업데이트 실패");
-      }
+      // try {
+      //   const response = await api.post('/api/users/update-stats', {
+      //   solved: filteredQuizzes.length,
+      //   correct: score
+      //   });
+      //   if (response.data.success) {
+      //     setCurrentUser(response.data.user); 
+      //   }
+      // } catch (err) {
+      //     console.error("통계 업데이트 실패");
+      // }
       setQuizState({ soloResults: { score: score, total: filteredQuizzes.length } });
       router.push('/solo-result');
     }

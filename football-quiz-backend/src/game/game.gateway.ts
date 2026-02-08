@@ -108,7 +108,6 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.broadcastLobbyUpdate();
   }
 
-  // 방 만들기 이벤트 처리
   @SubscribeMessage('create_room')
   handleCreateRoom(
     @ConnectedSocket() client: Socket,
