@@ -36,16 +36,15 @@ export default function SoloSelectPage() {
   };
 
   return (
-    <main className="h-screen bg-gray-950 text-white pt-24 p-8 flex flex-col overflow-hidden">
+    <main className="min-h-screen bg-gray-950 text-white pt-24 p-8">
       <GlobalHeader />
-      <div className="max-w-4xl mx-auto flex flex-col h-full">
+      <div className="max-w-4xl mx-auto">
         <button onClick={() => router.push('/mode-select')} className="text-gray-400 mt-5 mb-10 hover:text-white">
           ← 모드 선택으로
         </button>
         <h2 className="text-4xl font-black text-green-500 mb-2 italic">SOLO MODE</h2>
-        <p className="text-gray-500 mb-6 font-bold">도전할 퀴즈 유형을 선택하세요</p>
-
-        <div className="flex-1 overflow-y-auto pr-2 pb-4">
+        <p className="text-gray-500 mb-12 font-bold">도전할 퀴즈 유형을 선택하세요</p>
+        <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar pb-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             <button 
               onClick={() => handleSelectCategory('logo')}
