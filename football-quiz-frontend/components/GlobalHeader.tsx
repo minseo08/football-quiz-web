@@ -1,4 +1,3 @@
-// frontend/components/GlobalHeader.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';

@@ -4,6 +4,7 @@
 import { useEffect } from 'react';
 import { useGameStore } from '../store/useGameStore';
 import { api } from '../lib/api';
+import { GlobalFooter } from '../components/GlobalFooter';
 import './globals.css';
 
 export default function RootLayout({
@@ -14,10 +15,8 @@ export default function RootLayout({
   const { setCurrentUser, currentUser } = useGameStore();
 
   useEffect(() => {
-    // 이미 데이터가 있다면 굳이 다시 묻지 않습니다.
     if (currentUser) return;
 
-    // 서버에 세션 정보를 확인합니다.
     api.get('/api/auth/check')
       .then(({ data }) => {
         if (data.authenticated) {
@@ -31,8 +30,11 @@ export default function RootLayout({
 
   return (
     <html lang="ko">
-      <body>
-        {children}
+      <body className="flex flex-col min-h-screen">
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
+        <GlobalFooter />
       </body>
     </html>
   );
