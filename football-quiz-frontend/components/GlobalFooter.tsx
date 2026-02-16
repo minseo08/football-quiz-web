@@ -7,13 +7,13 @@ export function GlobalFooter() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
           
           <div className="text-gray-400">
-            <p className="font-bold text-gray-300 mb-1">FOOT:AGE - Football Quiz Game</p>
+            <p className="font-bold text-gray-300 mb-1">FOOT:AGE - Football Quiz</p>
             <p className="text-xs">© 2026 All rights reserved.</p>
           </div>
 
           <div className="text-gray-400 text-center">
             <p className="text-xs mb-1">
-              <span className="text-gray-500 font-bold uppercase tracking-wider text-[10px]">Icon Credit</span>
+              <span className="text-gray-500 font-bold uppercase tracking-wider text-[10px]">Icon Author</span>
             </p>
             <p className="text-xs">
               <a 
